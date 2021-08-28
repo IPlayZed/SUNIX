@@ -1,5 +1,5 @@
 # g++ parameters
-GPP_PARAMS = -m32 
+GPP_PARAMS = -m32 -Wall 
 # assembler parameters
 AS_PARAMS = --32
 # linker parameters
