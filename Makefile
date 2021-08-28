@@ -1,5 +1,5 @@
 # g++ parameters
-GPP_PARAMS = -m32 -Wall 
+GPP_PARAMS = -m32 -Wall -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-rtti -fno-exceptions -fno-leading-underscore
 # assembler parameters
 AS_PARAMS = --32
 # linker parameters
