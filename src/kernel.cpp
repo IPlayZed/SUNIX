@@ -1,7 +1,7 @@
-typedef unsigned short USHORT;
+typedef unsigned short uint16_t;
 
 #define HIGH_BYTE 0xFF00
-#define VRAM_ADDRS (USHORT*)0xb8000
+#define VRAM_ADDRS (uint16_t*)0xb8000
 #define MESSAGE (char*)"Kernel main test"
 #define TRUE 1==1
 #define FALSE !TRUE
@@ -17,10 +17,10 @@ typedef unsigned short USHORT;
  * */
 void printf(char* str) 
 { 
- USHORT* vram = VRAM_ADDRS;
+ uint16_t* vram = VRAM_ADDRS;
  
  for(int i = 0; str[i] != '\0'; ++i) {
-     vram[i] = (USHORT)(vram[i] & HIGH_BYTE) | str[i];
+     vram[i] = (uint16_t)(vram[i] & HIGH_BYTE) | str[i];
  }
 }
 
