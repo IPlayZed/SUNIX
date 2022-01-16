@@ -3,6 +3,9 @@ typedef unsigned short USHORT;
 #define HIGH_BYTE 0xFF00
 #define VRAM_ADDRS (USHORT*)0xb8000
 #define MESSAGE (char*)"Kernel main test"
+#define TRUE 1==1
+#define FALSE !TRUE
+#define LANG_C "C"
 
 /* As we do not use glibc, we must write our very basic implementation of print.
  * This implementation only support putting ASCII characters on the screen, with black background and white text.
@@ -14,11 +17,10 @@ typedef unsigned short USHORT;
  * */
 void printf(char* str) 
 { 
- USHORT* vram= VRAM_ADDRS;
+ USHORT* vram = VRAM_ADDRS;
  
  for(int i = 0; str[i] != '\0'; ++i) {
-     USHORT vram_high_byte = (vram[i] & HIGH_BYTE);
-     vram[i] = vram_high_byte | str[i];
+     vram[i] = (USHORT)(vram[i] & HIGH_BYTE) | str[i];
  }
 }
 
@@ -28,7 +30,7 @@ void printf(char* str)
  * to the stack. The multiboot structure can be used for kernel operation, while
  * the multiboot flag can be used to make sure the enviroment is indeed multiboot.
  * */
-extern "C" void kernel_main(void* multiboot_struct, unsigned int multiboot_flag) {
+extern LANG_C void kernel_main(void* multiboot_struct, unsigned int multiboot_flag) {
     printf(MESSAGE);
-    while(1);
+    while(TRUE);
 }

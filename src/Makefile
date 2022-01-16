@@ -18,6 +18,8 @@ mykernel.bin: linker.ld ${objectfiles}
 	ld ${LD_PARAMS} -T $< -o $@ ${objectfiles}
 
 install: mykernel.bin
-	sudo cp $< /boot/mykernel.bin
 	mv $< ../out
 	mv *.o ../out
+
+grubinstall: mykernel.bin
+	sudo cp $< /boot/mykernel.bin
