@@ -13,6 +13,9 @@ The architecture in mind now is x86 and it is assumed that the system is in lega
 
 To build issue command `make mykernel.bin` in `src`.
 
+To install issue `make install` in `src`. This requires sudo privilages
+and will do the build as well.
+
 The kernel binary by default is installed into `/boot` with `make install`.
 There are multiple ways to add it as an entry, but the easy and dirty way is to add it
 explicitly as a custom binary into the generated GRUB script, which is located at
