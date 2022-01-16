@@ -4,6 +4,33 @@ The main goal of the project is to be multiboot compliant and bootable through
 a bootloader supporting the multiboot standard.
 The architecture in mind now is x86 and it is assumed that the system is in legacy BIOS mode.
 
+## Build
+
+### Environment
+
+- Ubuntu 20.04
+- Install dependencies: `sudo apt install g++ binutils libc6-dev-i386 make`
+
+To build issue command `make mykernel.bin` in `src`.
+
+The kernel binary by default is installed into `/boot` with `make install`.
+There are multiple ways to add it as an entry, but the easy and dirty way is to add it
+explicitly as a custom binary into the generated GRUB script, which is located at
+`/boot/grub/grub.cfg`.
+
+For instance you could add the following at the *END OF THE FILE*:
+
+```sh
+### BEGIN MYKERNEL ###
+
+menuentry 'SUNIX'{
+	multiboot /boot/mykernel.bin
+	boot
+}
+
+### END MYKERNEL ###
+```
+
 ## Main goals
 This list is not final and may be modified freely throughout the evolution of the project.
  - [x] Take control over from GRUB2.

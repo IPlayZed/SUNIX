@@ -11,14 +11,12 @@ objectfiles = loader.o kernel.o
 # The rule to compile object files from kernel files.
 %.o: %.cpp
 	g++ ${GPP_PARAMS} -o $@ -c $<
-	mv $@ ../out
 %.o: %.s
 	as ${AS_PARAMS} -o $@ $<
-	mv $o ../out
 	
 mykernel.bin: linker.ld ${objectfiles}
 	ld ${LD_PARAMS} -T $< -o $@ ${objectfiles}
-	mv $o ../out
-	
+	mv $@ ../out
+	mv *.o ../out
 install: mykernel.bin
 	sudo cp $< /boot/mykernel.bin
