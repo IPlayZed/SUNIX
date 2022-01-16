@@ -1,4 +1,5 @@
 typedef unsigned short uint16_t;
+typedef void (*ctor)();
 
 #define HIGH_BYTE 0xFF00
 #define VRAM_ADDRS (uint16_t*)0xb8000
@@ -6,6 +7,11 @@ typedef unsigned short uint16_t;
 #define TRUE 1==1
 #define FALSE !TRUE
 #define LANG_C "C"
+
+
+extern LANG_C ctor start_ctors;
+extern LANG_C ctor end_ctors;
+
 
 /* As we do not use glibc, we must write our very basic implementation of print.
  * This implementation only support putting ASCII characters on the screen, with black background and white text.
@@ -22,6 +28,14 @@ void printf(char* str)
  for(int i = 0; str[i] != '\0'; ++i) {
      vram[i] = (uint16_t)(vram[i] & HIGH_BYTE) | str[i];
  }
+}
+
+extern LANG_C void call_ctors()
+{
+	for(ctor* i = &start_ctors; i != (ctor*)end_ctors; i++)
+	{
+		(*i)();
+	}	
 }
 
 /* We take the multiboot structure and multiboot flag value which we have pushed with
