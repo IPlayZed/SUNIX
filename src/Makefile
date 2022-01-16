@@ -5,6 +5,13 @@ AS_PARAMS = --32
 # linker parameters
 LD_PARAMS = -melf_i386
 
+# ISO FS
+ISO_DIR = iso
+ISO_BOOT_DIR = ${ISO_DIR}/boot
+ISO_GRUB_DIR = ${ISO_BOOT_DIR}/grub
+ISO_GRUB_CFG = ${ISO_GRUB_DIR}/grub.cfg
+
+
 # compiled files
 objectfiles = loader.o kernel.o
 
@@ -14,12 +21,19 @@ objectfiles = loader.o kernel.o
 %.o: %.s
 	as ${AS_PARAMS} -o $@ $<
 	
-mykernel.bin: linker.ld ${objectfiles}
+sunix.bin: linker.ld ${objectfiles}
 	ld ${LD_PARAMS} -T $< -o $@ ${objectfiles}
 
-install: mykernel.bin
-	mv $< ../out
-	mv *.o ../out
+install: sunix.bin
+	cp $< ../out
 
-grubinstall: mykernel.bin
-	sudo cp $< /boot/mykernel.bin
+grubinstall: sunix.bin
+	sudo cp $< /boot/sunix.bin
+
+sunix.iso: sunix.bin
+	mkdir -p ${ISO_GRUB_DIR}
+	cp $< ${ISO_BOOT_DIR}
+	cp grub.cfg ${ISO_GRUB_DIR}
+	grub-mkrescue --output=$@ ${ISO_DIR}
+	rm -rf iso
+	mv $@ ../out

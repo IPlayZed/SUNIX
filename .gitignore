@@ -1,4 +1,6 @@
 *.o
 *.bin
 *.kate-swp
+*.iso
 log.txt
+.vscode
