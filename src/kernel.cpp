@@ -36,7 +36,7 @@ void printf(char* str)
  * */
 extern LANG_C void call_ctors()
 {
-	for(ctor* i = &start_ctors; i != end_ctors; i++)
+	for(ctor* i = &start_ctors; i != &end_ctors; i++)
 	{
 		(*i)();
 	}	

@@ -16,8 +16,7 @@
 loader:
     mov $kernel_stack_ptr, %esp # set stack pointer, as kernel_main is a cpp program and it expects the stack pointer to be set.
 
-    # FIXME: When this is called, kernel doesn't run?
-	#call call_ctors # Call the compiler generated constructors.
+	call call_ctors # Call the compiler generated constructors.
 	
     push %eax # The (GRUB2) bootloader stores the multiboot structure's RAM adress in the AX register during loading the kernel of choice, which contains valuable information, like the size of the RAM. We should push this to the stack in order to access it later.
     push %ebx # The (GRUB2) bootloader stores the MULTIBOOT_FLAG value in the BX register.
