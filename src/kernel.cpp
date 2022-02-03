@@ -30,9 +30,13 @@ void printf(char* str)
  }
 }
 
+/* For composite object static/global objects (like class instances) we must call the compiler
+ * generated constructors.
+ * We just iterate through them.
+ * */
 extern LANG_C void call_ctors()
 {
-	for(ctor* i = &start_ctors; i != (ctor*)end_ctors; i++)
+	for(ctor* i = &start_ctors; i != end_ctors; i++)
 	{
 		(*i)();
 	}	
