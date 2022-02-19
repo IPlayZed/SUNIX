@@ -1,16 +1,9 @@
-typedef unsigned short uint16_t;
-typedef void (*ctor)();
+#include "types.h"
 
-#define HIGH_BYTE 0xFF00
-#define VRAM_ADDRS (uint16_t*)0xb8000
-#define MESSAGE (char*)"Kernel main test"
-#define TRUE 1==1
-#define FALSE !TRUE
-#define LANG_C "C"
+#define MESSAGE (char*)"Kernel main test "
 
-
-extern LANG_C ctor start_ctors;
-extern LANG_C ctor end_ctors;
+extern LANG_C f_ctor start_ctors;
+extern LANG_C f_ctor end_ctors;
 
 
 /* As we do not use glibc, we must write our very basic implementation of print.
@@ -36,7 +29,7 @@ void printf(char* str)
  * */
 extern LANG_C void call_ctors()
 {
-	for(ctor* i = &start_ctors; i != &end_ctors; i++)
+	for(f_ctor* i = &start_ctors; i != &end_ctors; i++)
 	{
 		(*i)();
 	}	
@@ -48,7 +41,7 @@ extern LANG_C void call_ctors()
  * to the stack. The multiboot structure can be used for kernel operation, while
  * the multiboot flag can be used to make sure the enviroment is indeed multiboot.
  * */
-extern LANG_C void kernel_main(void* multiboot_struct, unsigned int multiboot_flag) {
+extern LANG_C void kernel_main(void* multiboot_struct, uint32_t multiboot_flags) {
     printf(MESSAGE);
-    while(TRUE);
+    while(_TRUE);
 }

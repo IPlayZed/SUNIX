@@ -37,3 +37,6 @@ sunix.iso: sunix.bin
 	grub-mkrescue --output=$@ ${ISO_DIR}
 	rm -rf iso
 	mv $@ ../out
+
+run: sunix.iso
+	qemu-system-i386 ../out/$<
