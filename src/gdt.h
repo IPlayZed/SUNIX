@@ -1,6 +1,16 @@
 #ifndef __GDT_H
 #define __GDT_H
 
+#define _64_MEGABYTES 64*1024*1024
+#define CSS_FLAGS 0x9A
+#define DSS_FLAGS 0x92
+#define EXPECTED_BYTES_NUM 2
+#define GDT_ADDRESS 0
+#define SEGMENT_INTEGER_HIGH_BYTES 1
+#define HIGH_BYTES_LSHIFT 16
+#define SMALL_LIMIT_16 65536
+#define SEGMENT_DESCRIPTOR_ACCESS 6
+
 #include "types.h"
 class GlobalDescriptorTable {
     public:

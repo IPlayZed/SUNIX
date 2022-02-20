@@ -1,13 +1,5 @@
 #include "gdt.h"
 
-#define _64_MEGABYTES 64*1024*1024
-#define CSS_FLAGS 0x9A
-#define DSS_FLAGS 0x92
-#define EXPECTED_BYTES_NUM 2
-#define GDT_ADDRESS 0
-#define SEGMENT_INTEGER_HIGH_BYTES 1
-#define HIGH_BYTES_LSHIFT 16
-
 GlobalDescriptorTable::GlobalDescriptorTable()
 : nullSegmentSelector(0, 0, 0), unusedSegmentSelector(0, 0, 0),
 codeSegmentSelector(0, _64_MEGABYTES, CSS_FLAGS),
@@ -29,4 +21,15 @@ uint16_t GlobalDescriptorTable::GetDataSegmentSelectorOffset(){
 
 uint16_t GlobalDescriptorTable::GetCodeSegmentSelectorOffset() {
     return (uint8_t*)&codeSegmentSelector - (uint8_t*)this;
+}
+
+GlobalDescriptorTable::SegmentDescriptor::SegmentDescriptor(uint32_t base, uint32_t limit, uint8_t flags) {
+    uint8_t* targetSegmentDescriptor = (uint8_t*)this;
+    if (limit <= SMALL_LIMIT_16) {
+        targetSegmentDescriptor[SEGMENT_DESCRIPTOR_ACCESS] = 0x40; 
+    }
+    else {
+        // TODO
+    }
+    
 }
