@@ -16,13 +16,22 @@ The architecture in mind now is x86 and it is assumed that the system is in lega
 
 Most will prefer this.
 
+#### Boot from image
+1. Issue `make run` in `src`.
+
+#### Kernel-only mode
 1. To build and install issue command `make install` in `src`.
 2. To boot the kernel with Qemu issue `qemu-system-i386 --kernel mykernel.bin` in `out`.
 
-### Boot on real hardware with GRUB2
+### Boot on real hardware with GRUB2.
 
+#### Create bootable image.
+Issue `make sunix.iso` in `src`. You can write this to an external media with any known methods,
+like `dd` or Balena Etcher. The image is self bootable, as it contains GRUB2, with an entry to the
+kernel.
+#### Install the kernel to an already existing system
 This will NOT break your system in any way ;).
-If you want to run it on bare metal, you must have GRUB2 installed.
+If you want to run it on bare metal, you must have GRUB2 installed on the host system.
 
 The kernel binary by default is installed into `/boot` with `make grubinstall`.
 There are multiple ways to add it as an entry, but the easy and dirty way is to add it
@@ -47,6 +56,7 @@ This list is not final and may be modified freely throughout the evolution of th
  - [x] Take control over from GRUB2.
  - [x] Booot into a loop.
  - [x] Write out some text.
+ - [ ] Implement the Global Descriptor Table (GDT).
  - [ ] Write out decimals.
  - [ ] Write out hexadecimals.
  - [ ] Output to a serial port.
