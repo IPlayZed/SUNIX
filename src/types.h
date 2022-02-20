@@ -1,5 +1,5 @@
-#ifndef __TYPES_H__
-#define __TYPES_H__
+#ifndef __TYPES_H
+#define __TYPES_H
 
 #define _TRUE 1==1
 #define _FALSE !_TRUE
